@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#grad)"/>
+  <rect x="80" y="80" width="1040" height="640" rx="16" fill="#0f172a" stroke="#374151" stroke-width="2"/>
+  <text x="50%" y="50%" font-size="42" fill="#9CA3AF" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Arial, sans-serif">
+    F&amp;G Landscaping Services (captura placeholder)
+  </text>
+  <text x="50%" y="70%" font-size="20" fill="#6B7280" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Arial, sans-serif">
+    Reemplazar con captura real en src/assets/project-fg-landscaping.jpg/png
+  </text>
+</svg>

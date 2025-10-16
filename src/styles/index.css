@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Para compensar la altura del header fijo */
+  }
+  
+  body {
+    @apply font-sans bg-dark text-light overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+  
+  /* Mejoras para tipografía responsive */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  
+  h3 {
+    @apply text-xl md:text-2xl;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+  
+  .section {
+    @apply py-16 md:py-24;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl mb-8 md:mb-12 text-center font-bold text-primary;
+  }
+  
+  .btn {
+    @apply px-5 py-2.5 md:px-6 md:py-3 rounded-lg font-medium transition-all duration-300 inline-block text-center;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-light text-white;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white;
+  }
+  
+  /* Clases para espaciado responsive */
+  .gap-responsive {
+    @apply gap-4 md:gap-6 lg:gap-8;
+  }
+  
+  /* Mejoras para tarjetas */
+  .card {
+    @apply bg-dark-light rounded-xl p-4 md:p-6 shadow-lg transition-all duration-300;
+  }
+}
