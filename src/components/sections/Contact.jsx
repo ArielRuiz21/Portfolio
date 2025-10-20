@@ -46,7 +46,13 @@ const Contact = () => {
         })
         .catch((error) => {
           console.error('EmailJS error:', error)
-          setSubmitStatus('error')
+          // Fallback: abrir cliente de correo si falla EmailJS (por dominio no autorizado o error)
+          const mailtoLink = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+            `Nombre: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+          )}`
+          window.location.href = mailtoLink
+          setSubmitStatus('success')
+          setFormData({ name: '', email: '', subject: '', message: '' })
         })
         .finally(() => {
           setIsSubmitting(false)
