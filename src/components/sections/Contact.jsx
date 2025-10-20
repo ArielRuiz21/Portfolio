@@ -23,56 +23,16 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    const formspreeFormId = import.meta.env.VITE_FORMSPREE_FORM_ID
-    const endpoint = formspreeFormId ? `https://formspree.io/f/${formspreeFormId}` : null
-
-    const payload = {
-      name: formData.name,
-      email: formData.email,
-      subject: formData.subject,
-      message: formData.message
-    }
-
-    if (endpoint) {
-      fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
-        .then((res) => {
-          if (res.ok) return res.json()
-          throw new Error(`Formspree error: ${res.status}`)
-        })
-        .then(() => {
-          setSubmitStatus('success')
-          setFormData({ name: '', email: '', subject: '', message: '' })
-        })
-        .catch((error) => {
-          console.error('Formspree error:', error)
-          const mailtoLink = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-            `Nombre: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-          )}`
-          window.location.href = mailtoLink
-          setSubmitStatus('success')
-          setFormData({ name: '', email: '', subject: '', message: '' })
-        })
-        .finally(() => {
-          setIsSubmitting(false)
-          setTimeout(() => setSubmitStatus(null), 5000)
-        })
-    } else {
-      const mailtoLink = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-        `Nombre: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-      )}`
-      window.location.href = mailtoLink
-      setIsSubmitting(false)
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setTimeout(() => setSubmitStatus(null), 5000)
-    }
+    // Usar mailto como método principal para garantizar la recepción
+    const mailtoLink = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+      `Nombre: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    )}`
+    
+    window.location.href = mailtoLink
+    setIsSubmitting(false)
+    setSubmitStatus('success')
+    setFormData({ name: '', email: '', subject: '', message: '' })
+    setTimeout(() => setSubmitStatus(null), 5000)
   }
 
   const socialLinks = [
