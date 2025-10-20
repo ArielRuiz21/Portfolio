@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa'
-import emailjs from '@emailjs/browser'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,29 +23,35 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    const formspreeFormId = import.meta.env.VITE_FORMSPREE_FORM_ID
+    const endpoint = formspreeFormId ? `https://formspree.io/f/${formspreeFormId}` : null
 
-    const templateParams = {
+    const payload = {
       name: formData.name,
       email: formData.email,
       subject: formData.subject,
-      message: formData.message,
-      to_email: EMAIL_TO,
-      reply_to: formData.email
+      message: formData.message
     }
 
-    if (serviceId && templateId && publicKey) {
-      emailjs
-        .send(serviceId, templateId, templateParams, publicKey)
+    if (endpoint) {
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then((res) => {
+          if (res.ok) return res.json()
+          throw new Error(`Formspree error: ${res.status}`)
+        })
         .then(() => {
           setSubmitStatus('success')
           setFormData({ name: '', email: '', subject: '', message: '' })
         })
         .catch((error) => {
-          console.error('EmailJS error:', error)
-          // Fallback: abrir cliente de correo si falla EmailJS (por dominio no autorizado o error)
+          console.error('Formspree error:', error)
           const mailtoLink = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
             `Nombre: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
           )}`
@@ -59,7 +64,6 @@ const Contact = () => {
           setTimeout(() => setSubmitStatus(null), 5000)
         })
     } else {
-      // Fallback: abrir cliente de correo con los datos del formulario
       const mailtoLink = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
         `Nombre: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
       )}`
