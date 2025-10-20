@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import yoImg from '../../assets/yo.webp'
+import cvPDF from '../../assets/Curriculum CV Profesional De Hombre Con Foto Simple Azul (2).pdf'
 
 const Hero = () => {
   return (
@@ -56,7 +57,7 @@ const Hero = () => {
               <a href="#contact" className="btn btn-outline">
                 Contactarme
               </a>
-              <a href="/src/assets/Curriculum CV Profesional De Hombre Con Foto Simple Azul (2).pdf" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+              <a href={cvPDF} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
                 Mi CV
               </a>
             </motion.div>
